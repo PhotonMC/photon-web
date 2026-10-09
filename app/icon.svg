@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 250" fill="none" stroke-width="14" stroke-linecap="butt">
+  <style>
+    .m { stroke: #0b0b0c; }
+    .s { stroke: #cdd0da; }
+    @media (prefers-color-scheme: dark) {
+      .m { stroke: #f2f2f4; }
+      .s { stroke: #353743; }
+    }
+  </style>
+  <g>
+    <line class="s" x1="147" y1="22" x2="139" y2="97"/>
+    <line class="s" x1="20" y1="85" x2="90" y2="120"/>
+    <line class="s" x1="177" y1="134" x2="249" y2="124"/>
+    <line class="s" x1="97" y1="175" x2="45" y2="229"/>
+    <line class="s" x1="147" y1="170" x2="199" y2="244"/>
+    <line class="m" x1="140" y1="15" x2="132" y2="90"/>
+    <line class="m" x1="13" y1="78" x2="83" y2="113"/>
+    <line class="m" x1="170" y1="127" x2="242" y2="117"/>
+    <line class="m" x1="90" y1="168" x2="38" y2="222"/>
+    <line class="m" x1="140" y1="163" x2="192" y2="237"/>
+  </g>
+</svg>

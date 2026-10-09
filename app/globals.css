@@ -1,26 +1,205 @@
 @import "tailwindcss";
 
+/* Dark mode is driven by a `.dark` class on <html>, not the media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens
+   ------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #ffffff;
+  --ink: #0b0b0c;
+  --muted: #575965;
+  --line: #e3e4e9;
+  --shadow: #cdd0da;
+  --card: #ffffff;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0b0b0d;
+  --ink: #f2f2f4;
+  --muted: #9c9ea8;
+  --line: #24252c;
+  --shadow: #353743;
+  --card: #111114;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-card: var(--card);
+
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --radius-control: 6px;
+  --radius-card: 10px;
+
+  /* Hard offset shadows: no blur, ever. */
+  --shadow-hard: 6px 6px 0 var(--shadow);
+  --shadow-hard-sm: 2px 2px 0 var(--shadow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------- */
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ---------------------------------------------------------------------------
+   Reusable pieces
+   ------------------------------------------------------------------------- */
+@layer components {
+  /* Mono label: uppercase, wide tracking, muted. */
+  .label-mono {
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
+      monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--muted);
+  }
+
+  /* Big wordmark with its signature hard text-shadow. */
+  .wordmark {
+    font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(88px, 14vw, 200px);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    text-shadow: 8px 8px 0 var(--shadow);
+  }
+
+  .card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-hard);
+  }
+
+  /* Buttons "press into" their shadow on hover. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-control);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: var(--shadow-hard);
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: var(--shadow-hard-sm);
+  }
+
+  .btn:disabled {
+    cursor: progress;
+    opacity: 0.7;
+  }
+
+  /* Secondary / icon variant: outlined, same tactile behaviour. */
+  .btn-outline {
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    box-shadow: 4px 4px 0 var(--shadow);
+  }
+
+  .btn-icon:hover:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+
+  .field {
+    width: 100%;
+    min-width: 0;
+    height: 56px;
+    padding: 0 16px;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-control);
+    background: var(--card);
+    color: var(--ink);
+    font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+    /* >= 16px keeps iOS Safari from zooming on focus. */
+    font-size: 18px;
+    box-shadow: var(--shadow-hard);
+  }
+
+  .field::placeholder {
+    color: var(--muted);
+    opacity: 1;
+  }
+
+  .field[aria-invalid="true"] {
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Logo pulse: each bar fades 1 → 0.2 → 1 over 3.6s, staggered inline via
+   `animation-delay`, so light appears to emit around the burst.
+   ------------------------------------------------------------------------- */
+@keyframes photon-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.logo-bar {
+  animation: photon-pulse 3.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-bar {
+    animation: none;
+  }
+
+  .btn {
+    transition: none;
+  }
 }
