@@ -55,6 +55,8 @@ export function rateLimit(key: string, now: number = Date.now()): RateLimitResul
 /** Best-effort client IP from proxy headers; falls back to a shared bucket. */
 export function clientIp(request: Request): string {
   const headers = request.headers;
+  const cf = headers.get("cf-connecting-ip");
+  if (cf) return cf.trim();
   const direct =
     headers.get("x-vercel-forwarded-for") ?? headers.get("x-real-ip");
   if (direct) return direct.trim();
