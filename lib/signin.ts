@@ -16,8 +16,8 @@ export const GAME_COOKIE = `${prefix}photon_game`;
 /** The player's name, to show; it is not a secret and grants nothing. */
 export const NAME_COOKIE = "photon_name";
 
-const STATE_SECONDS = 120;
-/** The player may take a while to answer the game's question. */
+/** A device sign-in (open a page, type a code, approve) takes minutes, not seconds. */
+const STATE_SECONDS = 600;
 const GAME_SECONDS = 600;
 const SESSION_SECONDS = 60 * 60 * 24 * 7;
 

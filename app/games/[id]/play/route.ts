@@ -26,20 +26,22 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const { id } = await params;
   if (!GAME_ID.test(id)) return reply(303, "/games");
   const session = readCookie(request.headers.get("cookie"), SESSION_COOKIE);
-  if (!session) {
-    // Not signed in: the sign-in starts here, and carries this game through it so the player lands
-    // in the game, not on an account page.
-    const state = newState();
-    return reply(303, `photon://signin?state=${state}`, [stateCookie(state), gameCookie(id)]);
-  }
+  if (!session) return signIn(id);
   const answer = await launch(session, id);
   if (answer.status === 200 && isHex32(answer.code)) {
     return reply(303, `photon://launch?code=${answer.code.toLowerCase()}`);
   }
-  if (answer.status === 401) {
-    return reply(303, "/account", [clearCookie(SESSION_COOKIE), clearCookie(NAME_COOKIE)]);
-  }
+  if (answer.status === 401) return signIn(id, [clearCookie(SESSION_COOKIE), clearCookie(NAME_COOKIE)]);
   // A throttled or unreachable backend is a moment's wait, not a failed sign-in.
   if (answer.status === 429 || answer.status === 503) return reply(303, `/games/${id}?later=1`);
   return reply(303, answer.status === 404 ? "/games" : "/signin/failed");
+}
+
+/**
+ * Not signed in, or the session ran out: the sign-in starts here and carries this game through
+ * it, so the player lands in the game and not on an account page.
+ */
+function signIn(id: string, cookies: string[] = []): Response {
+  const state = newState();
+  return reply(303, `photon://signin?state=${state}`, [...cookies, stateCookie(state), gameCookie(id)]);
 }
