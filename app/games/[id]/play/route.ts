@@ -6,9 +6,10 @@ import { NAME_COOKIE, SESSION_COOKIE, clearCookie, isHex32, readCookie, reply } 
  * browser is; whether it may launch is the backend's answer, never the name cookie's.
  */
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
-  // Lax cookies still go to same-site sibling hosts, so the request must be from this origin.
-  const origin = request.headers.get("origin");
-  if (!origin || origin !== new URL(request.url).origin) {
+  // Lax cookies still go to same-site sibling hosts, so the request must be from this host. The
+  // host comes from the headers the proxy sent, as Next's own server actions do; the runtime
+  // rebuilds `request.url` differently in dev, on Workers and behind a proxy.
+  if (!fromThisHost(request)) {
     return new Response("forbidden", { status: 403, headers: { "Cache-Control": "no-store" } });
   }
   const { id } = await params;
@@ -23,4 +24,15 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     return reply(303, "/account", [clearCookie(SESSION_COOKIE), clearCookie(NAME_COOKIE)]);
   }
   return reply(303, answer.status === 404 ? "/games" : "/signin/failed");
+}
+
+function fromThisHost(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  if (!origin || !host) return false;
+  try {
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
 }
