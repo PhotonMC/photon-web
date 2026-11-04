@@ -7,5 +7,11 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  "previews": {
+    "vars": {
+      "NEXT_PUBLIC_GITHUB_URL": "https://github.com/PhotonMC",
+      "NEXT_PUBLIC_LAUNCH_DATE": "2026-12-01T18:00:00+03:00"
+    }
   }
 }
