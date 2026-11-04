@@ -39,8 +39,7 @@ for (const [skin, colors] of Object.entries(tokens.skins)) {
   for (const n of names) rs += `    ${n}: 0x${rgba(colors[n]).toString(16).padStart(8, "0").toUpperCase()},\n`;
   rs += `    radius: ${shape.radius},\n    border: ${shape.border},\n    offset: ${shape.offset},\n};\n`;
 }
-rs += "\n/// Every skin with its name.\npub const ALL: [(&str, Skin); " + Object.keys(tokens.skins).length + "] = [\n";
-for (const skin of Object.keys(tokens.skins)) rs += `    ("${skin}", ${skin.toUpperCase()}),\n`;
-rs += "];\n";
+const all = Object.keys(tokens.skins).map((k) => `("${k}", ${k.toUpperCase()})`).join(", ");
+rs += `\n/// Every skin with its name.\npub const ALL: [(&str, Skin); ${Object.keys(tokens.skins).length}] = [${all}];\n`;
 writeFileSync(rustOut, rs);
 console.log(`wrote app/tokens.css and ${rustOut}`);
