@@ -31,5 +31,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   if (answer.status === 401) {
     return reply(303, "/account", [clearCookie(SESSION_COOKIE), clearCookie(NAME_COOKIE)]);
   }
+  // A throttled or unreachable backend is a moment's wait, not a failed sign-in.
+  if (answer.status === 429 || answer.status === 503) return reply(303, `/games/${id}?later=1`);
   return reply(303, answer.status === 404 ? "/games" : "/signin/failed");
 }

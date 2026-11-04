@@ -4,8 +4,15 @@ import { findGame } from "@/lib/directory";
 
 export const dynamic = "force-dynamic";
 
-export default async function Game({ params }: { params: Promise<{ id: string }> }) {
+export default async function Game({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ later?: string }>;
+}) {
   const { id } = await params;
+  const { later } = await searchParams;
   const game = await findGame(id);
   if (game === undefined) notFound();
   if (game === null) {
@@ -41,6 +48,11 @@ export default async function Game({ params }: { params: Promise<{ id: string }>
         />
       ))}
       <p className="text-pretty">{game.description}</p>
+      {later === "1" && (
+        <p role="status" className="text-muted">
+          Photon is busy right now. Try Play again in a moment.
+        </p>
+      )}
       <form method="post" action={`/games/${game.id}/play`}>
         <button type="submit" className="rounded border border-current px-6 py-3 text-lg">
           Play
