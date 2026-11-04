@@ -20,7 +20,7 @@ export function GameCard({ game }: { game: Game }) {
           </a>
         </h2>
         <p className="label-mono text-[11px] tracking-[0.2em]">
-          {game.players} online · {game.version}
+          {game.players} online
         </p>
       </div>
       {/* Play stays a POST form: the origin check of the route depends on it. */}

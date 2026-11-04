@@ -62,7 +62,7 @@ export default async function Game({
             {game.name}
           </h1>
           <p className="label-mono text-[12px]">
-            {game.players} online · {game.version}
+            {game.players} online
           </p>
         </div>
         {/* Play stays a POST form: the origin check of the route depends on it. */}

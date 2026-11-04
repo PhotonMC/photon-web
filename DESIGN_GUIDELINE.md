@@ -73,7 +73,7 @@ repeats the home page's footer style.
 
 A tile for one game, used on the list and in "Other games": a `.card` with a 16:9 thumbnail area on top (the game's first
 picture, or a flat `--line` placeholder with the first letter in display type), the name in Figtree
-700, then `.label-mono` stats ("12 online · 1.21"). The name is a stretched link to the game page
+700, then `.label-mono` stats ("12 online"). The name is a stretched link to the game page
 (`after:absolute after:inset-0`), so the whole tile opens it. A play arrow (`.btn-icon`, `▶` only,
 `aria-label="Play <name>"`) sits at the bottom right in its own POST form above the link: shown on
 hover and focus, always shown when the device has no hover (`@media (hover: none)`). Hover presses the tile
