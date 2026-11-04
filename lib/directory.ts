@@ -8,7 +8,11 @@ export type Game = {
   version: string;
   players: number;
   images: string[];
+  /** YouTube video ids, checked again here: the embed address is built from them, never taken. */
+  videos: string[];
 };
+
+export const VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
 
 /** Ids are lower-case words and dashes; anything else is not looked up. */
 export const GAME_ID = /^[a-z0-9-]{1,64}$/;
@@ -16,11 +20,12 @@ export const GAME_ID = /^[a-z0-9-]{1,64}$/;
 function asGame(value: unknown): Game | null {
   if (typeof value !== "object" || value === null) return null;
   const entry = value as Record<string, unknown>;
-  const { id, name, description, version, players, images } = entry;
+  const { id, name, description, version, players, images, videos } = entry;
   if (typeof id !== "string" || !GAME_ID.test(id)) return null;
   if (typeof name !== "string" || typeof description !== "string") return null;
   if (typeof version !== "string" || typeof players !== "number") return null;
   const pictures = Array.isArray(images) ? images : [];
+  const clips = Array.isArray(videos) ? videos : [];
   return {
     id,
     name,
@@ -29,6 +34,7 @@ function asGame(value: unknown): Game | null {
     players,
     // The operator's pictures are shown from their own hosts: only https ones.
     images: pictures.filter((url): url is string => typeof url === "string" && url.startsWith("https://")),
+    videos: clips.filter((id): id is string => typeof id === "string" && VIDEO_ID.test(id)),
   };
 }
 
