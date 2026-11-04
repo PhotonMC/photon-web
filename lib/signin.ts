@@ -11,10 +11,14 @@ const production = process.env.NODE_ENV === "production";
 const prefix = production ? "__Host-" : "";
 export const STATE_COOKIE = `${prefix}photon_state`;
 export const SESSION_COOKIE = `${prefix}photon_session`;
+/** The game a Play press was for, kept across the sign-in it started; a game id grants nothing. */
+export const GAME_COOKIE = `${prefix}photon_game`;
 /** The player's name, to show; it is not a secret and grants nothing. */
 export const NAME_COOKIE = "photon_name";
 
 const STATE_SECONDS = 120;
+/** The player may take a while to answer the game's question. */
+const GAME_SECONDS = 600;
 const SESSION_SECONDS = 60 * 60 * 24 * 7;
 
 export const NO_STORE_HEADERS = {
@@ -55,6 +59,7 @@ export function setCookie(name: string, value: string, seconds: number): string 
 
 export const stateCookie = (state: string) => setCookie(STATE_COOKIE, state, STATE_SECONDS);
 export const sessionCookie = (session: string) => setCookie(SESSION_COOKIE, session, SESSION_SECONDS);
+export const gameCookie = (id: string) => setCookie(GAME_COOKIE, id, GAME_SECONDS);
 export const clearCookie = (name: string) => `${name}=; ${attributes(0)}`;
 
 export function nameCookie(name: string): string {

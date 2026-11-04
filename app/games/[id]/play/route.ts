@@ -1,6 +1,9 @@
 import { GAME_ID, launch } from "@/lib/directory";
 import {
   NAME_COOKIE,
+  gameCookie,
+  newState,
+  stateCookie,
   SESSION_COOKIE,
   clearCookie,
   fromThisHost,
@@ -23,7 +26,12 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   const { id } = await params;
   if (!GAME_ID.test(id)) return reply(303, "/games");
   const session = readCookie(request.headers.get("cookie"), SESSION_COOKIE);
-  if (!session) return reply(303, "/account");
+  if (!session) {
+    // Not signed in: the sign-in starts here, and carries this game through it so the player lands
+    // in the game, not on an account page.
+    const state = newState();
+    return reply(303, `photon://signin?state=${state}`, [stateCookie(state), gameCookie(id)]);
+  }
   const answer = await launch(session, id);
   if (answer.status === 200 && isHex32(answer.code)) {
     return reply(303, `photon://launch?code=${answer.code.toLowerCase()}`);
