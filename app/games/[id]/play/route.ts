@@ -1,5 +1,13 @@
 import { GAME_ID, launch } from "@/lib/directory";
-import { NAME_COOKIE, SESSION_COOKIE, clearCookie, isHex32, readCookie, reply } from "@/lib/signin";
+import {
+  NAME_COOKIE,
+  SESSION_COOKIE,
+  clearCookie,
+  fromThisHost,
+  isHex32,
+  readCookie,
+  reply,
+} from "@/lib/signin";
 
 /**
  * Play: a POST, so a link on another site cannot make one. The session cookie only says who this
@@ -24,15 +32,4 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     return reply(303, "/account", [clearCookie(SESSION_COOKIE), clearCookie(NAME_COOKIE)]);
   }
   return reply(303, answer.status === 404 ? "/games" : "/signin/failed");
-}
-
-function fromThisHost(request: Request): boolean {
-  const origin = request.headers.get("origin");
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  if (!origin || !host) return false;
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
-  }
 }

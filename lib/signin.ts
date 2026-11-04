@@ -99,3 +99,35 @@ export async function exchange(code: string, state: string): Promise<Exchange | 
     return null;
   }
 }
+
+/**
+ * Whether a POST came from a page of this site. The host comes from the headers the proxy sent, as
+ * Next's own server actions do; the runtime rebuilds `request.url` differently in dev, on Workers
+ * and behind a proxy. Lax cookies still go to same-site sibling hosts, so this is checked too.
+ */
+export function fromThisHost(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  if (!origin || !host) return false;
+  try {
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
+/** Ends the session at the backend. Best effort: the caller clears its cookies whatever this says. */
+export async function revoke(session: string): Promise<void> {
+  const base = backendUrl();
+  if (!base) return;
+  try {
+    await fetch(`${base}/v1/session/revoke`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${session}` },
+      signal: AbortSignal.timeout(4000),
+      cache: "no-store",
+    });
+  } catch {
+    // The backend is down; the session then ends at its own expiry.
+  }
+}
