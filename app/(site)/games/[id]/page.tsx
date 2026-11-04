@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
+import { GameCard } from "@/components/GameCard";
 import { GameThumb } from "@/components/GameThumb";
 import { NoticePage } from "@/components/NoticePage";
-import { findGame } from "@/lib/directory";
+import { findGame, listGames } from "@/lib/directory";
 
 export async function generateMetadata({
   params,
@@ -35,18 +36,20 @@ export default async function Game({
     );
   }
   const [video] = game.videos;
+  const others = ((await listGames()) ?? [])
+    .filter((other) => other.id !== game.id)
+    .slice(0, 3);
   return (
     <main className="mx-auto flex max-w-[960px] flex-col gap-8 px-5 py-10 sm:px-10">
       <div className="card overflow-hidden">
         {video ? (
-          // The address is built here from a checked id, so a directory entry cannot frame another site.
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${video}`}
-            title={`${game.name} video`}
-            loading="lazy"
-            allowFullScreen
-            allow="encrypted-media; picture-in-picture; fullscreen"
-            className="aspect-video w-full"
+          // An uploaded file from the operator's host: nothing is fetched until play.
+          <video
+            src={video}
+            controls
+            preload="metadata"
+            poster={game.images[0]}
+            className="aspect-video w-full bg-ink"
           />
         ) : (
           <GameThumb game={game} className="border-b-0" />
@@ -96,6 +99,17 @@ export default async function Game({
             />
           ))}
         </div>
+      )}
+
+      {others.length > 0 && (
+        <section className="flex flex-col gap-4">
+          <h2 className="label-mono text-[12px]">Other games</h2>
+          <ul className="grid gap-8 sm:grid-cols-3">
+            {others.map((other) => (
+              <GameCard key={other.id} game={other} />
+            ))}
+          </ul>
+        </section>
       )}
     </main>
   );

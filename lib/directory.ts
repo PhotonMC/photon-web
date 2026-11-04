@@ -9,11 +9,12 @@ export type Game = {
   version: string;
   players: number;
   images: string[];
-  /** YouTube video ids, checked again here: the embed address is built from them, never taken. */
+  /** `https` addresses of video files, checked again here; the page plays them in a video element. */
   videos: string[];
 };
 
-export const VIDEO_ID = /^[A-Za-z0-9_-]{11}$/;
+/** A video file address: https, no spaces, a sensible length. */
+export const VIDEO_URL = /^https:\/\/[\x21-\x7e]{1,492}$/;
 
 /** Ids are lower-case words and dashes; anything else is not looked up. */
 export const GAME_ID = /^[a-z0-9-]{1,64}$/;
@@ -39,7 +40,7 @@ function asGame(value: unknown): Game | null {
         typeof url === "string" && url.startsWith("https://"),
     ),
     videos: clips.filter(
-      (id): id is string => typeof id === "string" && VIDEO_ID.test(id),
+      (url): url is string => typeof url === "string" && VIDEO_URL.test(url),
     ),
   };
 }

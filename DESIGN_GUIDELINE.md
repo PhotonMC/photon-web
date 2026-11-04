@@ -71,10 +71,20 @@ repeats the home page's footer style.
 
 ## Game card
 
-A tile for one game, used on the list: a `.card` with a 16:9 thumbnail area on top (the game's first
+A tile for one game, used on the list and in "Other games": a `.card` with a 16:9 thumbnail area on top (the game's first
 picture, or a flat `--line` placeholder with the first letter in display type), the name in Figtree
-700, then `.label-mono` stats ("12 online · 1.21"). The whole card is one link. Hover presses it
+700, then `.label-mono` stats ("12 online · 1.21"). The name is a stretched link to the game page
+(`after:absolute after:inset-0`), so the whole tile opens it. A play arrow (`.btn-icon`, `▶` only,
+`aria-label="Play <name>"`) sits at the bottom right in its own POST form above the link: shown on
+hover and focus, always shown when the device has no hover (`@media (hover: none)`). Hover presses the tile
 like a button. Operator pictures always carry `referrerPolicy="no-referrer"` and are only `https`.
+
+## Game page
+
+Video first (a `<video controls preload="metadata">` from the operator's https file, poster = first image; the
+first image alone when there is no video), then name and stats with the Play button, the description, the
+image strip, and "Other games" (up to three other tiles; no "similar" claim until the directory has tags). No
+YouTube embeds: the client plays the same files natively.
 
 ## Behaviour
 
