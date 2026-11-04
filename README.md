@@ -1,3 +1,9 @@
+# Photon website
+
+The public site of Photon: the games directory, the sign-in endings and the waitlist at `/waitlist`.
+How pages should look is written in [DESIGN_GUIDELINE.md](DESIGN_GUIDELINE.md); read it before
+adding or changing a page.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

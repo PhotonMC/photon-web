@@ -6,8 +6,8 @@ add it here in the same commit.
 
 ## Principles
 
-- **Tactile, flat, hard-edged.** Thick borders and offset shadows with **no blur, ever**. Nothing
-  is rounded beyond the control radius, nothing glows, nothing gradients.
+- **Tactile, flat, hard-edged.** Thick borders and offset shadows with **no blur, ever**. Corners
+  use the control radius (cards a little more), nothing glows, nothing gradients.
 - **Monochrome first.** Ink on paper (light) or paper on ink (dark). Colour is only for state
   (`--ok`, `--bad`). There is no brand accent colour beyond ink.
 - **Mono for meta, Figtree for voice.** Anything that labels or counts is mono; anything that
@@ -39,7 +39,7 @@ a new token means regenerating and committing both repositories. Use the Tailwin
 - `.label-mono`: uppercase, `0.24em` tracking, muted. Use it for meta text such as "12 online",
   versions, section captions and navigation.
 - Body copy: `text-muted`, `text-pretty`, comfortable line length (about 640px).
-- Page title: `text-[32px]` (detail pages) or `text-[28px]` (lists), weight 800.
+- Page title: `text-[32px]`, weight 800. Notice pages (`NoticePage`) use `text-[28px]`.
 
 ## Components (`app/globals.css`)
 
@@ -53,8 +53,9 @@ a new token means regenerating and committing both repositories. Use the Tailwin
 
 ## Layout
 
-- Page gutters: `px-5` on phones, `sm:px-10` from tablets. Content width: `max-w-[960px]` for
-  lists, `max-w-[720px]` for detail and reading pages.
+- Page gutters: `px-5` on phones, `sm:px-10` from tablets. Content width: `max-w-[1100px]` for
+  the game list and the header, `max-w-[960px]` for a game page, `max-w-[720px]` for settings and
+  reading pages.
 - Vertical rhythm: sections are `gap-6` or `gap-8`; hero blocks use `mt-10` to `mt-12`.
 - Everything that is pressed is at least 44px high and wide.
 - Focus is a `2px` ink outline with a `3px` offset (`:focus-visible`); do not remove it.
@@ -64,7 +65,8 @@ a new token means regenerating and committing both repositories. Use the Tailwin
 Every page except the waitlist sits in the shared shell: a header with the logo mark linking to
 `/games`, the sections (Games, Avatar, Marketplace, Settings) as `.label-mono` links with the
 current section underlined, and on the right the signed-in name or a Sign in link, then the theme
-toggle. On phones the links wrap beneath the logo; they are never hidden behind a menu. The footer
+toggle. On phones the logo, Sign in and the theme toggle share the first row and the links sit on a row of
+ their own beneath, with tighter tracking; they are never hidden behind a menu. The footer
 repeats the home page's footer style.
 
 ## Game card
