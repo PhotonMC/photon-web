@@ -2,11 +2,11 @@
 
 :root {
   --bg: #ffffff;
-  --ink: #0b0b0c;
-  --muted: #575965;
-  --line: #e3e4e9;
-  --shadow: #cdd0da;
-  --card: #ffffff;
+  --ink: #111114;
+  --muted: #5d5d68;
+  --line: #e3e3ea;
+  --shadow: #d2d3df;
+  --card: #ffffffe6;
   --button: #ffffff;
   --button-ink: #111114;
   --button-border: #111114;
@@ -14,29 +14,53 @@
   --accent-ink: #ffffff;
   --ok: #1f9a3c;
   --bad: #d6342c;
+  --button-border-hover: #111114;
+  --hover: #1111140f;
+  --tip-bg: #111114f5;
+  --tip-edge1: #74768f;
+  --tip-edge2: #3a3b4d;
+  --tip-ink: #ffffff;
+  --tip-muted: #a9a9b8;
+  --text-shadow: #00000000;
+  --bevel-light: #00000000;
+  --bevel-dark: #00000000;
   --radius-ui: 6px;
   --border-ui: 2px;
   --offset-ui: 5px;
+  --space-ui: 4px;
+  --font-ui: var(--font-sans);
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0b0b0d;
-  --ink: #f2f2f4;
-  --muted: #9c9ea8;
-  --line: #24252c;
-  --shadow: #353743;
-  --card: #111114;
-  --button: #111114;
-  --button-ink: #f2f2f4;
-  --button-border: #f2f2f4;
-  --accent: #f2f2f4;
-  --accent-ink: #0b0b0d;
-  --ok: #4cc866;
-  --bad: #ff6159;
+  --bg: #0d0d10;
+  --ink: #f2f2f5;
+  --muted: #a2a2ae;
+  --line: #2a2a33;
+  --shadow: #33333f;
+  --card: #0d0d10d6;
+  --button: #0d0d10;
+  --button-ink: #f2f2f5;
+  --button-border: #f2f2f5;
+  --accent: #f2f2f5;
+  --accent-ink: #0d0d10;
+  --ok: #55ff55;
+  --bad: #ff5555;
+  --button-border-hover: #f2f2f5;
+  --hover: #f2f2f512;
+  --tip-bg: #100010f0;
+  --tip-edge1: #5000ff;
+  --tip-edge2: #28007f;
+  --tip-ink: #ffffff;
+  --tip-muted: #aaaaaa;
+  --text-shadow: #00000000;
+  --bevel-light: #00000000;
+  --bevel-dark: #00000000;
   --radius-ui: 6px;
   --border-ui: 2px;
   --offset-ui: 5px;
+  --space-ui: 4px;
+  --font-ui: var(--font-sans);
   color-scheme: dark;
 }
 
@@ -54,8 +78,20 @@
   --accent-ink: #ffffff;
   --ok: #55ff55;
   --bad: #ff5555;
+  --button-border-hover: #ffffff;
+  --hover: #ffffff1a;
+  --tip-bg: #100010f0;
+  --tip-edge1: #5000ff;
+  --tip-edge2: #28007f;
+  --tip-ink: #ffffff;
+  --tip-muted: #aaaaaa;
+  --text-shadow: #3f3f3f;
+  --bevel-light: #ffffff42;
+  --bevel-dark: #0000004d;
   --radius-ui: 0px;
   --border-ui: 2px;
   --offset-ui: 0px;
+  --space-ui: 4px;
+  --font-ui: var(--font-game);
   color-scheme: dark;
 }

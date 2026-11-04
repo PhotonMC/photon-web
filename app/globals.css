@@ -15,11 +15,12 @@
   --color-card: var(--card);
 
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-game: "Courier New", ui-monospace, monospace;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo,
     monospace;
 
-  --radius-control: 6px;
-  --radius-card: 10px;
+  --radius-control: var(--radius-ui);
+  --radius-card: calc(var(--radius-ui) + 4px);
 
   /* Hard offset shadows: no blur, ever. */
   --shadow-hard: 6px 6px 0 var(--shadow);
