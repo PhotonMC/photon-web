@@ -5,6 +5,9 @@ import { newState, reply, stateCookie } from "@/lib/signin";
  * link that opens the game. The state grants nothing by itself, and one is never taken from the
  * request, so an attacker cannot fix a victim's state in advance.
  */
+// Every visit needs a state of its own: a cached answer would hand every browser the same one.
+export const dynamic = "force-dynamic";
+
 export function GET() {
   const state = newState();
   return reply(302, `photon://signin?state=${state}`, [stateCookie(state)]);

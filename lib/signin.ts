@@ -33,6 +33,9 @@ export function isHex32(value: string | null | undefined): value is string {
   return typeof value === "string" && /^[0-9a-f]{32}$/i.test(value);
 }
 
+/** A state no browser has: real ones are 128 random bits. */
+export const NO_STATE = "0".repeat(32);
+
 /** 16 random bytes in hex. */
 export function newState(): string {
   const bytes = new Uint8Array(16);
