@@ -32,7 +32,7 @@ export async function SiteHeader() {
             photon
           </span>
         </Link>
-        <NavLinks />
+        <NavLinks className="order-last w-full sm:order-none sm:w-auto" />
         <div className="ml-auto flex items-center gap-4">
           {signedIn && name ? (
             <a

@@ -10,12 +10,12 @@ const LINKS = [
 ] as const;
 
 /** The sections of the site; the one the visitor is in is underlined. */
-export function NavLinks() {
+export function NavLinks({ className = "" }: { className?: string }) {
   const path = usePathname();
   return (
     <nav
       aria-label="Sections"
-      className="flex flex-wrap items-center gap-x-5 gap-y-1 sm:gap-x-7"
+      className={`flex flex-wrap items-center gap-x-4 gap-y-1 sm:gap-x-7 ${className}`}
     >
       {LINKS.map(({ href, label }) => {
         const here = path === href || path.startsWith(`${href}/`);
@@ -24,7 +24,7 @@ export function NavLinks() {
             key={href}
             href={href}
             aria-current={here ? "page" : undefined}
-            className={`label-mono inline-flex min-h-11 items-center text-[12px] tracking-[0.24em] underline-offset-[10px] hover:text-ink hover:underline ${
+            className={`label-mono inline-flex min-h-11 items-center text-[12px] tracking-[0.14em] underline-offset-[10px] sm:tracking-[0.24em] hover:text-ink hover:underline ${
               here ? "text-ink underline decoration-2" : ""
             }`}
           >
