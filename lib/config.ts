@@ -6,6 +6,14 @@
  * with the literal `process.env.NEXT_PUBLIC_X` form.
  */
 
+export const FOOTER_ITEMS = [
+  "Rust",
+  "WASM Sandbox",
+  "Hot Reload",
+  "Auto-Sync",
+  "1:1 Parity",
+] as const;
+
 export const TAGLINE =
   "Minecraft, rebuilt from scratch in Rust. Hot-loaded WASM mods, servers that ship their own mods, and 100% vanilla parity.";
 

@@ -2,15 +2,7 @@ import { Countdown } from "@/components/Countdown";
 import { LogoMark } from "@/components/LogoMark";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { WaitlistForm } from "@/components/WaitlistForm";
-import { TAGLINE, TAGLINE_EMPHASIS, siteConfig } from "@/lib/config";
-
-const FOOTER_ITEMS = [
-  "Rust",
-  "WASM Sandbox",
-  "Hot Reload",
-  "Auto-Sync",
-  "1:1 Parity",
-];
+import { FOOTER_ITEMS, TAGLINE, TAGLINE_EMPHASIS, siteConfig } from "@/lib/config";
 
 const headerLinkClass =
   "label-mono inline-flex min-h-11 items-center text-[12px] tracking-[0.24em] underline-offset-[6px] hover:text-ink hover:underline";
